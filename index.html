@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognitive Twin Enterprise - Telemetry AI Hub</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            font-family: sans-serif;
+        }
+
+        .glow-red {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        }
+
+        .glow-green {
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+        }
+
+        .glow-blue {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        canvas {
+            background: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
+        }
+    </style>
+</head>
+
+<body class="p-6">
+
+    <!-- Top Navigation Header -->
+    <header class="flex justify-between items-center border-b border-slate-800 pb-4 mb-6">
+        <div>
+            <h1 class="text-2xl font-bold tracking-wider text-blue-400">COGNITIVE TWIN ENGINE v2.5</h1>
+            <p class="text-xs text-slate-400">Multi-Asset Telemetry Matrix & Predictive AI System</p>
+        </div>
+        <div class="flex gap-4">
+            <span
+                class="px-3 py-1 bg-green-950 text-green-400 rounded-full text-xs font-mono border border-green-800 flex items-center gap-1.5 glow-green">
+                <span class="h-2 w-2 rounded-full bg-green-400 animate-ping"></span> ALL SYSTEMS NOMINAL
+            </span>
+            <span class="text-slate-500 text-xs font-mono self-center">Node-ID: 31</span>
+        </div>
+    </header>
+
+    <!-- Multi-Device Asset Selector Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <!-- Asset 1: Gas Turbine -->
+        <button onclick="switchAsset('turbine')" id="btn-turbine"
+            class="p-4 bg-slate-900 border-2 border-blue-500 rounded-xl text-left transition hover:bg-slate-800">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Asset 01</span>
+                <span class="h-2.5 w-2.5 rounded-full bg-green-400 glow-green"></span>
+            </div>
+            <h3 class="text-lg font-bold text-white">Heavy Gas Turbine (GT-300)</h3>
+            <p class="text-xs text-slate-400 mt-1 font-mono">Telemetry Matrix: Spinning Core</p>
+        </button>
+
+        <!-- Asset 2: CNC Machine -->
+        <button onclick="switchAsset('cnc')" id="btn-cnc"
+            class="p-4 bg-slate-900 border border-slate-800 rounded-xl text-left transition hover:bg-slate-800">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Asset 02</span>
+                <span class="h-2.5 w-2.5 rounded-full bg-green-400 glow-green"></span>
+            </div>
+            <h3 class="text-lg font-bold text-white">Smart CNC Milling Center</h3>
+            <p class="text-xs text-slate-400 mt-1 font-mono">Telemetry Matrix: Spindle & Vibration</p>
+        </button>
+
+        <!-- Asset 3: Robotic Arm -->
+        <button onclick="switchAsset('robot')" id="btn-robot"
+            class="p-4 bg-slate-900 border border-slate-800 rounded-xl text-left transition hover:bg-slate-800">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Asset 03</span>
+                <span class="h-2.5 w-2.5 rounded-full bg-amber-400 glow-orange"></span>
+            </div>
+            <h3 class="text-lg font-bold text-white">Articulated Precision Arm</h3>
+            <p class="text-xs text-slate-400 mt-1 font-mono">Telemetry Matrix: Joint Torque & Angle</p>
+        </button>
+    </section>
+
+    <!-- Main Workspace Layout -->
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Left Column: Dynamic Visualizations & HUD controls -->
+        <div class="lg:col-span-2 flex flex-col gap-6">
+
+            <!-- Graphic Digital Twin Viewport Canvas -->
+            <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300">Live Hardware Twin Viewport
+                    </h2>
+                    <div class="flex gap-2 text-xs">
+                        <button onclick="setRenderMode('solid')" id="mode-solid"
+                            class="px-3 py-1 bg-blue-600 text-white rounded font-medium">Solid Surface</button>
+                        <button onclick="setRenderMode('wireframe')" id="mode-wire"
+                            class="px-3 py-1 bg-slate-800 text-slate-400 rounded font-medium">X-Ray Wireframe</button>
+                    </div>
+                </div>
+                <canvas id="twinCanvas" width="700" height="350"
+                    class="w-full rounded-lg border border-slate-800"></canvas>
+            </div>
+
+            <!-- Trend Analysis Component (SVG Multi-Timeline Chart) -->
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300">Predictive Trend Analysis
+                            Model</h2>
+                        <p class="text-xs text-slate-500">Historical sequence mapping & rolling AI threshold forecast
+                            matrix</p>
+                    </div>
+                    <span
+                        class="px-2 py-0.5 bg-blue-950 text-blue-400 text-[10px] font-mono border border-blue-800 rounded">AI
+                        Forecast Active</span>
+                </div>
+                <div class="relative h-40 w-full bg-slate-950 rounded-lg border border-slate-900 p-2">
+                    <svg id="trendSvg" viewBox="0 0 600 150" class="w-full h-full">
+                        <!-- Horizontal Grid Lines -->
+                        <line x1="0" y1="37.5" x2="600" y2="37.5" stroke="#1e293b" stroke-dasharray="4,4" />
+                        <line x1="0" y1="75" x2="600" y2="75" stroke="#1e293b" stroke-dasharray="4,4" />
+                        <line x1="0" y1="112.5" x2="600" y2="112.5" stroke="#1e293b" stroke-dasharray="4,4" />
+
+                        <!-- AI Warning Limit Line -->
+                        <line x1="0" y1="45" x2="600" y2="45" stroke="#ef4444" stroke-opacity="0.4" stroke-width="1.5"
+                            stroke-dasharray="6,3" />
+                        <text x="5" y="40" fill="#ef4444" fill-opacity="0.7" font-size="8"
+                            font-family="monospace">CRITICAL AI HAZARD LINE</text>
+
+                        <!-- Live Render Paths -->
+                        <path id="historicalPath" d="" fill="none" stroke="#3b82f6" stroke-width="2.5"
+                            stroke-linecap="round" />
+                        <path id="forecastPath" d="" fill="none" stroke="#a855f7" stroke-width="2"
+                            stroke-dasharray="5,4" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="flex justify-between text-[11px] font-mono text-slate-500 mt-2">
+                    <span>-30s historical data stream</span>
+                    <span class="text-blue-400">● Live Stream Sensor Payload</span>
+                    <span class="text-purple-400">● AI Predictive Horizon (+15s)</span>
+                    <span>T-0 timeline offset</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Control deck, AI Root Cause Analysis, Actions -->
+        <div class="flex flex-col gap-6">
+
+            <!-- Live Sensors Telemetry Readings Panel -->
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 mb-4">Active Telemetry Channels
+                </h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                        <span id="label-sensor1"
+                            class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Core Velocity</span>
+                        <div id="val-sensor1" class="text-xl font-bold font-mono text-white mt-1">1450 RPM</div>
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                        <span id="label-sensor2"
+                            class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Thermal Load</span>
+                        <div id="val-sensor2" class="text-xl font-bold font-mono text-white mt-1">84.2 °C</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Engine Core Feature: Root Cause AI Analysis Module -->
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 mb-3">Root Cause AI Diagnostics
+                </h2>
+                <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 font-mono text-xs">
+                    <div class="flex items-center gap-2 mb-3 text-blue-400 font-bold">
+                        <span class="h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
+                        AI INFERENCE LOGGING KERNEL ACTIVE
+                    </div>
+                    <div id="aiDiagnostics" class="text-slate-300 space-y-2 leading-relaxed">
+                        <!-- Content auto-injected by JS engine -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Alerts Engine Dashboard Component -->
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl flex-1 flex flex-col">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 mb-3">Real-time Warning Intercept
+                    Logs</h2>
+                <div id="alertTerminal"
+                    class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-[11px] font-mono space-y-2 flex-1 overflow-y-auto max-h-[160px] text-emerald-400">
+                    <div>[SYSTEM INFO] Ingestion engine synchronization successful.</div>
+                    <div>[SYSTEM INFO] Telemetry channels reporting steady state parameters.</div>
+                </div>
+            </div>
+
+            <!-- Simulated Event Trigger Deck -->
+            <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 mb-3">Diagnostic Simulation Matrix
+                </h2>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="injectAnomalousPayload()"
+                        class="bg-red-950 hover:bg-red-900 border border-red-800 text-red-300 py-2 rounded-lg text-xs font-medium font-mono uppercase transition tracking-wider glow-red">
+                        Simulate Surge Fault
+                    </button>
+                    <button onclick="resetTelemetrySimulation()"
+                        class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 py-2 rounded-lg text-xs font-medium font-mono uppercase transition">
+                        Normalize Load
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Operational System Control Core JavaScript Engine Logic Layout -->
+    <script>
+        let currentAsset = 'turbine';
+        let renderMode = 'solid';
+        let simulationAnomaly = false;
+        let rotationAngle = 0;
+        let dataPoints = Array.from({ length: 40 }, () => 60 + Math.random() * 20);
+
+        const canvas = document.getElementById('twinCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Telemetry Parameter Profiles Matrix
+        const assetProfiles = {
+            turbine: { s1: 'Core Velocity', s2: 'Thermal Load', u1: 'RPM', u2: '°C', base1: 1420, base2: 82, factor1: 80, factor2: 4 },
+            cnc: { s1: 'Spindle Load', s2: 'X-Axis Feedrate', u1: 'kW', u2: 'mm/m', base1: 18.4, base2: 1200, factor1: 3, factor2: 150 },
+            robot: { s1: 'Joint 3 Torque', s2: 'End Effector Velocity', u1: 'Nm', u2: 'mm/s', base1: 64, base2: 450, factor1: 12, factor2: 45 }
+        };
+
+        function switchAsset(assetKey) {
+            currentAsset = assetKey;
+            ['turbine', 'cnc', 'robot'].forEach(k => {
+                const btn = document.getElementById(`btn-${k}`);
+                if (k === assetKey) {
+                    btn.classList.add('border-blue-500');
+                    btn.classList.remove('border-slate-800');
+                } else {
+                    btn.classList.remove('border-blue-500');
+                    btn.classList.add('border-slate-800');
+                }
+            });
+            logTerminal(`[ASSET ROUTER] Switched active pipeline control monitoring configuration targeting: ${assetKey.toUpperCase()}`);
+            resetTelemetrySimulation();
+        }
+
+        function setRenderMode(mode) {
+            renderMode = mode;
+            document.getElementById('mode-solid').className = mode === 'solid' ? 'px-3 py-1 bg-blue-600 text-white rounded font-medium' : 'px-3 py-1 bg-slate-800 text-slate-400 rounded font-medium';
+            document.getElementById('mode-wire').className = mode === 'wireframe' ? 'px-3 py-1 bg-blue-600 text-white rounded font-medium' : 'px-3 py-1 bg-slate-800 text-slate-400 rounded font-medium';
+        }
+
+        function logTerminal(message, isCritical = false) {
+            const terminal = document.getElementById('alertTerminal');
+            const colorClass = isCritical ? 'text-red-400 font-bold animate-pulse' : 'text-emerald-400';
+            terminal.innerHTML += `<div class="${colorClass}">[${new Date().toLocaleTimeString()}] ${message}</div>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function injectAnomalousPayload() {
+            simulationAnomaly = true;
+            logTerminal(`[ALERT SUBSYSTEM INTERCEPTED] CRITICAL OVER-LOAD AMPLITUDE EVENT TRIGGERED IN ${currentAsset.toUpperCase()}`, true);
+        }
+
+        function resetTelemetrySimulation() {
+            simulationAnomaly = false;
+            logTerminal(`[SYSTEM CONFIG] Normalization signal dispatch deployed. Suppressed telemetry faults corrected.`);
+        }
+
+        // Render Pipelines for Multi-Device Visual Environment Layouts
+        function drawDigitalTwin() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            rotationAngle += simulationAnomaly ? 0.25 : 0.04;
+
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+
+            const isWire = renderMode === 'wireframe';
+            ctx.strokeStyle = simulationAnomaly ? '#ef4444' : (isWire ? '#38bdf8' : '#1e3a8a');
+            ctx.fillStyle = simulationAnomaly ? '#7f1d1d' : '#334155';
+            ctx.lineWidth = 1.5;
+
+            if (currentAsset === 'turbine') {
+                // Draw Axis Spine Assembly Core
+                ctx.beginPath();
+                ctx.rect(-120, -15, 240, 30);
+                isWire ? ctx.stroke() : (ctx.fill(), ctx.stroke());
+
+                // Draw Interlocking Fan Matrices Blades Structures
+                for (let i = 0; i < 12; i++) {
+                    ctx.save();
+                    ctx.rotate(rotationAngle + (i * Math.PI / 6));
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-20, -50, -10, -90, 0, -110);
+                    ctx.bezierCurveTo(10, -90, 20, -50, 0, 0);
+                    isWire ? ctx.stroke() : (ctx.fillStyle = `rgb(51, 65, ${85 + i * 10})`, ctx.fill(), ctx.stroke());
+                    ctx.restore();
+                }
+            }
+            else if (currentAsset === 'cnc') {
+                // Draw Machine Base Enclosure Deck
+                ctx.beginPath();
+                ctx.rect(-100, 40, 200, 40);
+                isWire ? ctx.stroke() : (ctx.fill(), ctx.stroke());
+
+                // Draw Moving Cutting Spindle Architecture Head Matrix
+                let vibrationOffset = simulationAnomaly ? Math.sin(Date.now()) * 8 : Math.sin(Date.now() * 0.05) * 1.5;
+                ctx.save();
+                ctx.translate(vibrationOffset, -40);
+                ctx.beginPath();
+                ctx.rect(-30, -40, 60, 70);
+                isWire ? ctx.stroke() : (ctx.fill(), ctx.stroke());
+
+                // Spin cutting tool flutes
+                ctx.fillStyle = '#64748b';
+                ctx.beginPath();
+                ctx.rect(-6, 30, 12, 20);
+                ctx.fill(); ctx.stroke();
+                ctx.restore();
+            }
+            else if (currentAsset === 'robot') {
+                // Draw Arm Joint Hub Base Structure Link Mount
+                ctx.beginPath();
+                ctx.arc(0, 70, 35, Math.PI, 0);
+                isWire ? ctx.stroke() : (ctx.fill(), ctx.stroke());
+
+                // Segment Node Joint Linkage 1 Layout Structural Assembly
+                ctx.save();
+                ctx.translate(0, 60);
+                let jointAngle1 = Math.sin(rotationAngle * 0.5) * 0.4 - 0.5;
+                ctx.rotate(jointAngle1);
+                ctx.beginPath();
+                ctx.rect(-12, -80, 24, 80);
+                isWire ? ctx.stroke() : (ctx.fill(), ctx.stroke());
+
+                // Segment Node Joint Linkage 2 Layout Electrical Actuator
+                ctx.translate(0, -75);
+                let jointAngle2 = Math.cos(rotationAngle * 0.7) * 0.6 + 0.6;
+                ctx.rotate(jointAngle2);
+                ctx.beginPath();
+                ctx.rect(-8, -70, 16, 70);
+                isWire ? ctx.stroke() : (ctx.fill(), ctx.stroke());
+                ctx.restore();
+            }
+
+            ctx.restore();
+        }
+
+        // Processing Mathematics Core Telemetry Logic Calculations Engine
+        function updateTelemetryDataAndTrends() {
+            const profile = assetProfiles[currentAsset];
+
+            // Random walk calculation matrices algorithms loop updates
+            let baseVariance1 = (Math.random() - 0.5) * profile.factor1;
+            let baseVariance2 = (Math.random() - 0.5) * profile.factor2;
+
+            if (simulationAnomaly) {
+                baseVariance1 += profile.factor1 * 3.5;
+                baseVariance2 += profile.factor2 * 4.0;
+            }
+
+            const currentS1Val = (profile.base1 + baseVariance1).toFixed(currentAsset === 'cnc' ? 1 : 0);
+            const currentS2Val = (profile.base2 + baseVariance2).toFixed(1);
+
+            // Inject text content updates directly into document elements
+            document.getElementById('label-sensor1').innerText = profile.s1;
+            document.getElementById('label-sensor2').innerText = profile.s2;
+            document.getElementById('val-sensor1').innerText = `${currentS1Val} ${profile.u1}`;
+            document.getElementById('val-sensor2').innerText = `${currentS2Val} ${profile.u2}`;
+
+            if (simulationAnomaly && Math.random() > 0.6) {
+                logTerminal(`[CRITICAL THRESHOLD MET ERROR] ${profile.s1.toUpperCase()} OUTSIDE ACCEPTABLE MATRIX VALUE: ${currentS1Val}`, true);
+            }
+
+            // Real-time Trend Path Updates & Rolling Points Array Generation Shift Logic
+            let activeNormalizeValue = simulationAnomaly ? 110 + Math.random() * 25 : 60 + (Math.sin(Date.now() * 0.001) * 15) + Math.random() * 10;
+            dataPoints.push(activeNormalizeValue);
+            if (dataPoints.length > 40) dataPoints.shift();
+
+            // Render Dynamic SVG Timeline Graphs Math Vectors Translators
+            let histD = "";
+            let stepX = 450 / 40;
+            for (let i = 0; i < dataPoints.length; i++) {
+                let x = i * stepX;
+                let y = 150 - dataPoints[i];
+                histD += (i === 0 ? "M" : "L") + ` ${x} ${y}`;
+            }
+            document.getElementById('historicalPath').setAttribute('d', histD);
+
+            // Generate AI Forward Horizon Path Projection Line Curves
+            let lastX = 450 - stepX;
+            let lastY = 150 - dataPoints[dataPoints.length - 1];
+            let forecastD = `M ${lastX} ${lastY}`;
+
+            let trackingTrendSlope = simulationAnomaly ? -4 : (dataPoints[dataPoints.length - 1] - dataPoints[dataPoints.length - 5]) / 4;
+
+            for (let j = 1; j <= 15; j++) {
+                let x = lastX + (j * stepX);
+                let projectBase = dataPoints[dataPoints.length - 1] + (trackingTrendSlope * j);
+                let noise = (Math.random() - 0.5) * 8;
+                let y = 150 - Math.max(10, Math.min(140, projectBase + noise));
+                forecastD += ` L ${x} ${y}`;
+            }
+            document.getElementById('forecastPath').setAttribute('d', forecastD);
+
+            // Execute Dynamic Inference Engine Diagnostics Text Content String Injection Loops
+            updateInferenceEngineText(currentS1Val, currentS2Val, profile);
+        }
+
+        function updateInferenceEngineText(s1, s2, profile) {
+            const diagnosticPanel = document.getElementById('aiDiagnostics');
+            if (simulationAnomaly) {
+                diagnosticPanel.innerHTML = `
+                    <div class="text-red-400 font-bold">▶ [PROBABILITY: 94.2%] Primary Bearing Friction Failure</div>
+                    <div class="text-slate-400 mt-1 pl-4">Extreme resonance spikes matched with asymmetric thermal loads imply immediate lubrication starvation or structural distortion on main rotational channels. Dispatched secondary network bypass procedures.</div>
+                `;
+            } else {
+                diagnosticPanel.innerHTML = `
+                    <div class="text-emerald-400 font-bold">▶ [PROBABILITY: 98.9%] Micro-Structure Equilibrium</div>
+                    <div class="text-slate-400 mt-1 pl-4">Mathematical distribution patterns display standard telemetry profiles. Harmonic baseline frequency waves matched exactly to preset machine tolerance standards. Zero structural decay parameters observed.</div>
+                `;
+            }
+        }
+
+        // System Loop Execution Anchors
+        setInterval(drawDigitalTwin, 30);
+        setInterval(updateTelemetryDataAndTrends, 700);
+
+        // Initializer run
+        switchAsset('turbine');
+        setRenderMode('solid');
+    </script>
+</body>
+
+</html>
